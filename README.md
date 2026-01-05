@@ -60,6 +60,7 @@ O `pom.xml` raiz agrega todos os modulos e permite build/test por parte do siste
 - Arquitetura: `docs/architecture/overview.md`
 - Modulos e contratos: `docs/architecture/modules.md`
 - Diagramas (Mermaid): `docs/diagrams`
+- CI/CD (exemplo): `docs/ci/README.md`
 
 ## Estrutura de pastas
 - `app/`: runtime final (web/jobs)
