@@ -9,23 +9,32 @@
   <packaging>pom</packaging>
   <name>MMvsMS</name>
 
+  <!--
+    Deploy e build modulares (Maven reactor):
+    - Build/test de um modulo + dependencias: mvn -pl modules/expenses/impl -am test
+    - Publicar um modulo no repo interno:    mvn -pl modules/expenses/api -am deploy
+    - Runtime unico: deploy em producao e feito pelo modulo app (nao ha deploy isolado de modulo em runtime).
+    Beneficios: pipeline mais rapido por modulo, feedback local e boundaries reforcados, mantendo um deploy simples.
+  -->
+
   <modules>
-    <module>shared-api</module>
-    <module>shared-impl</module>
-    <module>expenses-api</module>
-    <module>expenses-impl</module>
-    <module>approvals-api</module>
-    <module>approvals-impl</module>
-    <module>policies-api</module>
-    <module>policies-impl</module>
-    <module>budgets-api</module>
-    <module>budgets-impl</module>
-    <module>attachments-api</module>
-    <module>attachments-impl</module>
-    <module>notifications-api</module>
-    <module>notifications-impl</module>
-    <module>audit-api</module>
-    <module>audit-impl</module>
+    <module>app</module>
+    <module>modules/shared/api</module>
+    <module>modules/shared/impl</module>
+    <module>modules/expenses/api</module>
+    <module>modules/expenses/impl</module>
+    <module>modules/approvals/api</module>
+    <module>modules/approvals/impl</module>
+    <module>modules/policies/api</module>
+    <module>modules/policies/impl</module>
+    <module>modules/budgets/api</module>
+    <module>modules/budgets/impl</module>
+    <module>modules/attachments/api</module>
+    <module>modules/attachments/impl</module>
+    <module>modules/notifications/api</module>
+    <module>modules/notifications/impl</module>
+    <module>modules/audit/api</module>
+    <module>modules/audit/impl</module>
     <module>architecture-tests</module>
   </modules>
 

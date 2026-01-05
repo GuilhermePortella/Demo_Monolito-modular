@@ -34,6 +34,28 @@ Este repositorio documenta a proposta de monolito modular para a plataforma inte
 - Migracoes de banco versionadas e executadas antes do start do app, com rollback documentado.
 - Observabilidade padrao (logs + traces) garantindo rastreio end-to-end em um runtime.
 
+## Build modular (Maven reactor) - tutorial rapido
+O `pom.xml` raiz agrega todos os modulos e permite build/test por parte do sistema sem recompilar tudo.
+
+### Lista de modulos no build
+- `app`: runtime final
+- `modules/<modulo>/api`: contratos e ports
+- `modules/<modulo>/impl`: dominio, aplicacao e infraestrutura
+- `architecture-tests`: regras ArchUnit globais
+
+### Exemplos de build seletivo
+- Build e teste apenas o API de despesas (e o que ele precisa):
+  `mvn -pl modules/expenses/api -am test`
+- Build e teste apenas o impl de despesas (traz APIs dependentes):
+  `mvn -pl modules/expenses/impl -am test`
+- Build do runtime final:
+  `mvn -pl app -am package`
+
+### Por que isso e positivo neste modelo
+- Reduz o tempo de feedback por modulo, mantendo um deploy unico em producao.
+- Reforca boundaries: dependencias entre modulos passam pelo API.
+- Permite evoluir um modulo sem precisar recompilar todo o monolito.
+
 ## Documentacao
 - Arquitetura: `docs/architecture/overview.md`
 - Modulos e contratos: `docs/architecture/modules.md`
