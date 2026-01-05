@@ -1,0 +1,110 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!--
+    POM alternativo para CI/CD.
+    Use com: mvn -f docs/ci/pom-ci.xml <goal>
+    Este arquivo acompanha o workflow em docs/ci/ci.yml.
+  -->
+
+  <groupId>com.company</groupId>
+  <artifactId>mmvsms-ci</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>MMvsMS CI Aggregator</name>
+
+  <modules>
+    <module>../../app</module>
+    <module>../../modules/shared/api</module>
+    <module>../../modules/shared/impl</module>
+    <module>../../modules/expenses/api</module>
+    <module>../../modules/expenses/impl</module>
+    <module>../../modules/approvals/api</module>
+    <module>../../modules/approvals/impl</module>
+    <module>../../modules/policies/api</module>
+    <module>../../modules/policies/impl</module>
+    <module>../../modules/budgets/api</module>
+    <module>../../modules/budgets/impl</module>
+    <module>../../modules/attachments/api</module>
+    <module>../../modules/attachments/impl</module>
+    <module>../../modules/notifications/api</module>
+    <module>../../modules/notifications/impl</module>
+    <module>../../modules/audit/api</module>
+    <module>../../modules/audit/impl</module>
+    <module>../../architecture-tests</module>
+  </modules>
+
+  <properties>
+    <java.version>17</java.version>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <junit.version>5.10.2</junit.version>
+    <archunit.version>1.2.1</archunit.version>
+    <sonar.projectKey>mmvsms</sonar.projectKey>
+    <sonar.host.url>https://sonar.example.com</sonar.host.url>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.tngtech.archunit</groupId>
+        <artifactId>archunit-junit5</artifactId>
+        <version>${archunit.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- Build e testes -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.11.0</version>
+          <configuration>
+            <release>${java.version}</release>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.2.5</version>
+          <configuration>
+            <useModulePath>false</useModulePath>
+          </configuration>
+        </plugin>
+
+        <!-- Versoes -->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.16.2</version>
+        </plugin>
+
+        <!-- Qualidade -->
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>3.10.0.2594</version>
+        </plugin>
+
+        <!-- Publicacao -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
