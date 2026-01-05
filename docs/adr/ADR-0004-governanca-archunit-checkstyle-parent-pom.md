@@ -1,4 +1,4 @@
-# ADR-0004: Governanca - ArchUnit + Checkstyle + Convention Plugins
+# ADR-0004: Governanca - ArchUnit + Checkstyle + Parent POM
 
 Status: Proposed
 Date: 2026-01-05
@@ -13,9 +13,9 @@ Tags: governance, quality, build
 ## Decision
 - Adotar ArchUnit para validar dependencias entre modulos e camadas.
 - Adotar Checkstyle para padrao de codigo.
-- Criar Convention Plugins Gradle para unificar configuracoes.
+- Usar Parent POM com pluginManagement e Maven Enforcer para unificar configuracoes.
 
 ## Consequences
 - Menos erosao arquitetural e feedback rapido no build.
 - Padroes consistentes em todos os modulos.
-- Custo inicial de setup e manutencao dos plugins.
+- Custo inicial de setup e manutencao do build.
