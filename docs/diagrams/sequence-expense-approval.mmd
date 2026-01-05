@@ -1,0 +1,27 @@
+sequenceDiagram
+  autonumber
+  actor Aprovador
+  participant UI as Portal
+  box Monolito Modular
+    participant Approvals as approvals
+    participant Expenses as expenses
+    participant Policies as policies
+    participant Budgets as budgets
+    participant Audit as audit
+    participant Outbox as outbox
+    participant Notifications as notifications
+  end
+
+  Aprovador->>UI: Aprovar despesa
+  UI->>Approvals: POST /approvals/{id}/approve
+  Approvals->>Expenses: Atualizar status
+  Expenses->>Policies: Revalidar politica (opcional)
+  Policies-->>Expenses: OK
+  Expenses->>Budgets: Confirmar reserva
+  Budgets-->>Expenses: OK
+  Approvals->>Audit: Registrar evento
+  Expenses->>Audit: Registrar evento
+  Approvals-->>UI: 200 OK
+  Outbox-->>Notifications: Evento ExpenseApproved
+  Notifications-->>Aprovador: Confirmacao
+  Notifications-->>Usuario: Notificar solicitante

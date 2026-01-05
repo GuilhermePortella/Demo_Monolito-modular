@@ -1,0 +1,31 @@
+sequenceDiagram
+  autonumber
+  actor Usuario
+  participant UI as Portal
+  box Monolito Modular
+    participant Expenses as expenses
+    participant Policies as policies
+    participant Budgets as budgets
+    participant Approvals as approvals
+    participant Attachments as attachments
+    participant Audit as audit
+    participant Outbox as outbox
+    participant Notifications as notifications
+  end
+
+  Usuario->>UI: Envia despesa
+  UI->>Expenses: POST /expenses
+  Expenses->>Policies: Validar politica
+  Policies-->>Expenses: OK
+  Expenses->>Budgets: Reservar orcamento
+  Budgets-->>Expenses: Reserva criada
+  Expenses->>Attachments: Registrar anexos
+  Attachments-->>Expenses: OK
+  Expenses->>Approvals: Criar workflow
+  Approvals-->>Expenses: Workflow criado
+  Expenses->>Audit: Registrar evento
+  Audit-->>Expenses: OK
+  Expenses-->>UI: 201 Created (expenseId)
+  Note over Expenses,Outbox: Transacao local com commit unico
+  Outbox-->>Notifications: Evento ExpenseSubmitted
+  Notifications-->>Usuario: Email/Slack

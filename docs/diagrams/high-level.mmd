@@ -1,0 +1,33 @@
+flowchart LR
+  User[Usuario]
+  UI[Portal Web]
+  Auth[IdP/SSO]
+  Storage[Object Storage]
+  Email[Email/Slack]
+  Ext[Consumidores externos]
+
+  subgraph Monolito Modular
+    Expenses[expenses]
+    Approvals[approvals]
+    Policies[policies]
+    Budgets[budgets]
+    Attachments[attachments]
+    Notifications[notifications]
+    Audit[audit]
+    Outbox[Outbox/Event Publisher]
+  end
+
+  User --> UI
+  UI --> Auth
+  UI --> Expenses
+  Expenses --> Policies
+  Expenses --> Budgets
+  Expenses --> Approvals
+  Expenses --> Attachments
+  Expenses --> Audit
+  Approvals --> Audit
+  Attachments --> Storage
+  Notifications --> Email
+  Expenses --> Outbox
+  Approvals --> Outbox
+  Outbox --> Ext

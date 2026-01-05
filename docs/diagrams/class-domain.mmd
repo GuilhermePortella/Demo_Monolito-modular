@@ -1,0 +1,74 @@
+classDiagram
+  class Expense {
+    +ExpenseId id
+    +EmployeeId employeeId
+    +Money total
+    +ExpenseStatus status
+    +submit()
+    +approve()
+  }
+
+  class ExpenseItem {
+    +Money amount
+    +String category
+    +String merchant
+  }
+
+  class Attachment {
+    +AttachmentId id
+    +String filename
+    +String contentType
+  }
+
+  class ApprovalWorkflow {
+    +WorkflowId id
+    +ApprovalStatus status
+    +addStep()
+    +approveStep()
+  }
+
+  class ApprovalStep {
+    +ApproverId approverId
+    +ApprovalDecision decision
+  }
+
+  class Policy {
+    +PolicyId id
+    +validate(expense)
+  }
+
+  class Budget {
+    +BudgetId id
+    +CostCenterId costCenterId
+    +Money limit
+  }
+
+  class BudgetReservation {
+    +ReservationId id
+    +Money amount
+    +ReservationStatus status
+  }
+
+  class AuditEvent {
+    +EventId id
+    +String aggregateId
+    +String type
+    +Instant occurredAt
+  }
+
+  class NotificationTask {
+    +TaskId id
+    +Channel channel
+    +TaskStatus status
+  }
+
+  Expense "1" o-- "*" ExpenseItem
+  Expense "1" o-- "*" Attachment
+  Expense "1" --> "1" ApprovalWorkflow
+  ApprovalWorkflow "1" o-- "*" ApprovalStep
+  Expense ..> Policy : validate
+  Expense "1" --> "0..1" BudgetReservation
+  BudgetReservation "*" --> "1" Budget
+  AuditEvent ..> Expense : record
+  AuditEvent ..> ApprovalWorkflow : record
+  NotificationTask ..> Expense : about
