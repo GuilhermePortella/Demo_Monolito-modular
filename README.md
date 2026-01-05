@@ -26,6 +26,14 @@ Este repositorio documenta a proposta de monolito modular para a plataforma inte
 - Aprovacao: atualizacao de status + confirmacao de reserva + auditoria
 - Notificacoes: processadas por jobs apos commit
 
+## Estrategia de deploy e CI/CD (aproveitando modularidade)
+- Pipeline unico, mas modular: cada modulo compila e roda testes isolados, com cache e paralelismo.
+- Gates obrigatorios: regras de arquitetura (ArchUnit), estilo e testes unitarios por modulo.
+- Build do artefato final (ex.: `:app`) somente apos passar nos gates modulares.
+- Deploy unico com rollout controlado (blue/green ou canary) e feature flags para mudancas sensiveis.
+- Migracoes de banco versionadas e executadas antes do start do app, com rollback documentado.
+- Observabilidade padrao (logs + traces) garantindo rastreio end-to-end em um runtime.
+
 ## Documentacao
 - Arquitetura: `docs/architecture/overview.md`
 - Modulos e contratos: `docs/architecture/modules.md`
