@@ -11,9 +11,18 @@
 
   <!--
     Deploy e build modulares (Maven reactor):
-    - Build/test de um modulo + dependencias: mvn -pl modules/expenses/impl -am test
+    - Listar modulos do reactor:             mvn -q -Dexec.skip=true help:evaluate -Dexpression=project.modules
+    - Build/test de um modulo + deps:        mvn -pl modules/expenses/impl -am test
+    - Build/test de 2+ modulos:              mvn -pl modules/expenses/impl,modules/approvals/impl -am test
+    - Build apenas dependentes:              mvn -pl modules/expenses/api -amd test
+    - Build do runtime final:                mvn -pl app -am package
+    - Instalar tudo localmente:              mvn install
+    - Instalar so um modulo (local):         mvn -pl modules/expenses/api -am install
     - Publicar um modulo no repo interno:    mvn -pl modules/expenses/api -am deploy
-    - Runtime unico: deploy em producao e feito pelo modulo app (nao ha deploy isolado de modulo em runtime).
+    - Rodar apenas testes de arquitetura:    mvn -pl architecture-tests test
+    - Skip tests (ex.: build rapido):        mvn -DskipTests package
+    - Retomar apos falha:                    mvn -rf :app
+    Runtime unico: deploy em producao e feito pelo modulo app (nao ha deploy isolado de modulo em runtime).
     Beneficios: pipeline mais rapido por modulo, feedback local e boundaries reforcados, mantendo um deploy simples.
   -->
 
