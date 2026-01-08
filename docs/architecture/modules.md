@@ -22,3 +22,8 @@
 - ExpenseApproved
 - BudgetReserved
 - PolicyViolationDetected
+
+## Spring Modulith
+- Modulos declarados com @ApplicationModule em package-info.java
+- APIs publicas marcadas com @NamedInterface("api")
+- Validacao automatica em architecture-tests/ModulithArchitectureTest.java
