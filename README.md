@@ -67,3 +67,6 @@ O `pom.xml` raiz agrega todos os modulos e permite build/test por parte do siste
 - `modules/`: limites de contexto por modulo (`api` e `impl`)
 - `architecture-tests/`: regras de arquitetura (ArchUnit)
 - `docs/`: documentacao e diagramas
+
+![Diagrama de modulos](docs/images/diagrama_modulos.png)
+
